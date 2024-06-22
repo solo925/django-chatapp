@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chat Application</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">ChatApp</a>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'chatroom_list' %}">Chat Rooms</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login' %}">Login</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+    <div class="container">
+        {% block content %}
+        {% endblock %}
+    </div>
+</body>
+</html>
+
+
+{% extends "chat/base.html" %}
+
+{% block content %}
+<h1>Chat Rooms</h1>
+<ul class="list-group">
+    {% for room in chatrooms %}
+        <li class="list-group-item">
+            <a href="{% url 'chatroom_detail' room.id %}">{{ room.name }}</a>
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}
+
+
+{% extends "chat/base.html" %}
+
+{% block content %}
+<h1>{{ chatroom.name }}</h1>
+<div class="messages">
+    {% for message in messages %}
+        <div class="message">
+            <strong>{{ message.user.username }}:</strong> {{ message.content }}
+        </div>
+    {% endfor %}
+</div>
+<form id="chat-form">
+    <div class="form-group">
+        <textarea id="message-input" class="form-control" rows="3" placeholder="Type your message"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Send</button>
+</form>
+<script>
+    const roomName = "{{ chatroom.name }}";
+    const username = "{{ username }}";
+    const chatSocket = new WebSocket(
+        'ws://' + window.location.host + '/ws/chat/' + roomName + '/'
+    );
+
+    chatSocket.onmessage = function(e) {
+        const data = JSON.parse(e.data);
+        document.querySelector('.messages').innerHTML += (
+            '<div class="message"><strong>' + data.username + ':</strong> ' + data.message + '</div>'
+        );
+    };
+
+    chatSocket.onclose = function(e) {
+        console.error('Chat socket closed unexpectedly');
+    };
+
+    document.querySelector('#chat-form').onsubmit = function(e) {
+        e.preventDefault();
+        const messageInputDom = document.querySelector('#message-input');
+        const message = messageInputDom.value;
+        chatSocket.send(JSON.stringify({
+            'message': message,
+            'username': username,
+            'room': roomName
+        }));
+        messageInputDom.value = '';
+    };
+</script>
+{% endblock %}
