@@ -1,5 +1,5 @@
-from django.contrib.auth.models import User
 from django.db import models
+from django.contrib.auth.models import User
 
 class ChatRoom(models.Model):
     name = models.CharField(max_length=255)
@@ -7,7 +7,6 @@ class ChatRoom(models.Model):
 
     def __str__(self):
         return self.name
-
 
 class Message(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -22,4 +21,5 @@ class Message(models.Model):
     @classmethod
     def last_10_messages(cls, chatroom):
         return cls.objects.filter(chatroom=chatroom).order_by('-timestamp')[:10]
+
 

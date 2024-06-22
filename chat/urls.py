@@ -1,11 +1,7 @@
-from django.contrib import admin
-from django.urls import path, include
-from django.contrib.auth import views as auth_views
+from django.urls import path
+from . import views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('chat/', include('chat.urls')),
-    path('accounts/login/', auth_views.LoginView.as_view(), name='login'),
-    path('accounts/logout/', auth_views.LogoutView.as_view(), name='logout'),
-    path('accounts/', include('django.contrib.auth.urls')),
+    path('', views.chatroom_list, name='chatroom_list'),
+    path('rooms/<int:room_id>/', views.chatroom_detail, name='chatroom_detail'),
 ]

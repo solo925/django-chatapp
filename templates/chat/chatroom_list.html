@@ -1,20 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Chat Rooms</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
-    <div class="container">
-        <h1>Chat Rooms</h1>
-        <ul class="list-group">
-            {% for room in chatrooms %}
-                <li class="list-group-item">
-                    <a href="{% url 'chatroom_detail' room.id %}">{{ room.name }}</a>
-                </li>
-            {% endfor %}
-        </ul>
-    </div>
-</body>
-</html>
+{% extends "chat/base.html" %}
+
+{% block content %}
+<h1>Chat Rooms</h1>
+<ul class="list-group">
+    {% for room in chatrooms %}
+        <li class="list-group-item">
+            <a href="{% url 'chatroom_detail' room.id %}">{{ room.name }}</a>
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}

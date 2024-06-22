@@ -1,0 +1,73 @@
+# Python bytecode
+*.pyc
+*.pyo
+__pycache__/
+
+# Virtual Environment
+venv/
+env/
+
+# Django Stuff
+*.log
+*.pot
+*.pyc
+*.pyo
+*.sqlite3
+*.wsgi
+db.sqlite3
+
+# Environments
+.env
+*.env
+
+# Node
+node_modules/
+
+# Static and media files
+static/
+media/
+
+# VS Code
+.vscode/
+
+# MacOS
+.DS_Store
+
+# PyCharm
+.idea/
+
+# Windows
+Thumbs.db
+
+# Pytest
+.cache/
+.pytest_cache/
+
+# MyPy
+.mypy_cache/
+dmypy.json
+dmypy.json.5
+
+# Coverage reports
+htmlcov/
+.coverage
+.coverage.*
+.cache
+
+# Django
+*.log
+*.pot
+*.pyc
+*.pyo
+__pycache__/
+local_settings.py
+
+# Others
+*.swp
+*~
+.project
+.idea
+.pydevproject
+
+# VSCode
+.vscode/
