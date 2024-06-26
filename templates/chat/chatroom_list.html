@@ -1,7 +1,8 @@
-{% extends "chat/base.html" %}
+{% extends "base.html" %}
 
 {% block content %}
 <h1>Chat Rooms</h1>
+<p><a href="{% url 'room' %}">create room</a></p>
 <ul class="list-group">
     {% for room in chatrooms %}
         <li class="list-group-item">
