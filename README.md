@@ -101,9 +101,7 @@ This is a simple chat application built using Django, Django Channels, and Boots
 
 Contributions are welcome! Feel free to open an issue or submit a pull request.
 
-## License
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
 ## Acknowledgements
 
@@ -112,5 +110,3 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 - [Bootstrap](https://getbootstrap.com/)
 - [Redis](https://redis.io/)
 ```
-
-Replace `yourusername` in the clone URL with your actual GitHub username. This README provides an overview of the project, installation instructions, and a brief guide on how to use and contribute to the project.
