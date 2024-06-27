@@ -1,10 +1,9 @@
 {% extends 'base.html' %}
 {% block content %}
-{% csrf_token %}
-<form action="" method="post">
-    {% csrf_token %}
-    {{form.as_p}}
-    <button type="submit">submit</button>
-</form>
-
+    <h2>Create a New Chatroom</h2>
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Submit</button>
+    </form>
 {% endblock content %}

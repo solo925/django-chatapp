@@ -17,7 +17,6 @@ class LoginForm(AuthenticationForm):
     
     
 class RoomForm(forms.ModelForm):
-    
     class Meta:
         model = ChatRoom
-        fields = '__all__'
+        fields = ['name']

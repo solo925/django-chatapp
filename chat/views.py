@@ -3,6 +3,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate,login,logout
 from .models import ChatRoom, Message
 from . forms import *
+from django.contrib import messages
+
 
 @login_required
 def chatroom_list(request):
@@ -18,27 +20,21 @@ def chatroom_detail(request, room_id):
         'messages': messages,
         'username': request.user.username
     })
+
 @login_required
 def create_chatroom(request):
-    form = RoomForm()
-    messages = Message.objects.all()
-    # get_or_create creates a new topic if there is none to get
-
     if request.method == 'POST':
-        chatroom_name = request.POST.get('chatroom.name')
-        messages , created = ChatRoom.objects.get_or_create(name = chatroom_name)
-        
-        Message.objects.create(
-            user = request.user,
-            chatroom= chatroom_name,
-            content= request.POST.get('content'),
-            # file= request.POST.get('file'),
-            # timestamp=request.POST.get('timestamp'),
-        )
-        
-        return redirect('chatroom_list')
-    context = {'form':form,'messages':messages}
-    return render(request,'chat/create.html',context)
+        form = RoomForm(request.POST)
+        if form.is_valid():
+            chatroom = form.save()
+            messages.success(request, f"Chatroom '{chatroom.name}' created successfully!")
+            return redirect('chatroom_list')
+    else:
+        form = RoomForm()
+
+    context = {'form': form}
+    return render(request, 'chat/create.html', context)
+
 
 
 def register(request):
